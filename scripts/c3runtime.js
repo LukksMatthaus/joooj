@@ -522,6 +522,18 @@ self["C3_Shaders"] = {};
 
 "use strict";C3.Plugins.Text.Exps={Text(){return this._text},PlainText(){return this._enableBBcode?C3.BBString.StripAnyTags(this._text):this._text},FaceName(){return this._faceName},FaceSize(){return this._ptSize},TextWidth(){return this._UpdateTextSize(),this._webglText.GetTextWidth()},TextHeight(){return this._UpdateTextSize(),this._webglText.GetTextHeight()},LineHeight(){return this._lineHeightOffset}};
 
+"use strict";{C3.Plugins.TextBox=class extends C3.SDKDOMPluginBase{constructor(a){super(a,"text-input"),this.AddElementMessageHandler("click",(a,b)=>a._OnClick(b)),this.AddElementMessageHandler("dblclick",(a,b)=>a._OnDoubleClick(b)),this.AddElementMessageHandler("change",(a,b)=>a._OnChange(b))}Release(){super.Release()}}}
+
+"use strict";C3.Plugins.TextBox.Type=class extends C3.SDKTypeBase{constructor(a){super(a)}Release(){super.Release()}OnCreate(){}};
+
+"use strict";{const a=0,b=["text","password","email","number","tel","url","textarea","search"];C3.Plugins.TextBox.Instance=class extends C3.SDKDOMInstanceBase{constructor(c,d){super(c,"text-input"),this._text="",this._placeholder="",this._title="",this._isEnabled=!0,this._isReadOnly=!1,this._spellCheck=!1,this._type="text",this._autoFontSize=!0,this._id="",d&&(this._text=d[a],this._placeholder=d[1],this._title=d[2],this.GetWorldInfo().SetVisible(d[3]),this._isEnabled=d[4],this._isReadOnly=d[5],this._spellCheck=d[6],this._type=b[d[7]],this._autoFontSize=d[8],this._id=d[9]),this.CreateElement({"type":this._type,"id":this._id})}Release(){super.Release()}GetElementState(){return{"text":this._text,"placeholder":this._placeholder,"title":this._title,"isEnabled":this._isEnabled,"isReadOnly":this._isReadOnly,"spellCheck":this._spellCheck}}async _OnClick(){this.GetScriptInterface().dispatchEvent(C3.New(C3.Event,"click",!0)),await this.TriggerAsync(C3.Plugins.TextBox.Cnds.OnClicked)}async _OnDoubleClick(){this.GetScriptInterface().dispatchEvent(C3.New(C3.Event,"dblclick",!0)),await this.TriggerAsync(C3.Plugins.TextBox.Cnds.OnDoubleClicked)}async _OnChange(a){this._text=a["text"],this.GetScriptInterface().dispatchEvent(C3.New(C3.Event,"change",!0)),await this.TriggerAsync(C3.Plugins.TextBox.Cnds.OnTextChanged)}_SetText(a){this._text===a||(this._text=a,this.UpdateElementState())}_GetText(){return this._text}_SetPlaceholder(a){this._placeholder===a||(this._placeholder=a,this.UpdateElementState())}_GetPlaceholder(){return this._placeholder}_SetTooltip(a){this._title===a||(this._title=a,this.UpdateElementState())}_GetTooltip(){return this._title}_SetEnabled(a){a=!!a;this._isEnabled===a||(this._isEnabled=a,this.UpdateElementState())}_IsEnabled(){return this._isEnabled}_SetReadOnly(a){a=!!a;this._isReadOnly===a||(this._isReadOnly=a,this.UpdateElementState())}_IsReadOnly(){return this._isReadOnly}_ScrollToBottom(){this.PostToDOMElement("scroll-to-bottom")}Draw(){}SaveToJson(){return{"t":this._text,"p":this._placeholder,"ti":this._title,"e":this._isEnabled,"r":this._isReadOnly,"sp":this._spellCheck,"type":this._type,"id":this._id}}LoadFromJson(a){this._text=a["t"],this._placeholder=a["p"],this._title=a["ti"],this._isEnabled=a["e"],this._isReadOnly=a["r"],this._spellCheck=a["sp"],this._type=a["type"],this._id=a["id"],this.UpdateElementState()}GetPropertyValueByIndex(a){return a===0?this._text:1===a?this._placeholder:2===a?this._title:4===a?this._isEnabled:5===a?this._isReadOnly:6===a?this._spellCheck:8===a?this._autoFontSize:9===a?this._id:void 0}SetPropertyValueByIndex(b,c){switch(b){case a:if(this._text===c)return;this._text=c,this.UpdateElementState();break;case 1:if(this._placeholder===c)return;this._placeholder=c,this.UpdateElementState();break;case 2:if(this._title===c)return;this._title=c,this.UpdateElementState();break;case 4:if(this._isEnabled===!!c)return;this._isEnabled=!!c,this.UpdateElementState();break;case 5:if(this._isReadOnly===!!c)return;this._isReadOnly=!!c,this.UpdateElementState();break;case 6:if(this._spellCheck===!!c)return;this._spellCheck=!!c,this.UpdateElementState();break;case 8:this._autoFontSize=!!c;break;case 9:if(this._id===c)return;this._id=c,this.UpdateElementState();}}GetDebuggerProperties(){const a=C3.Plugins.TextBox.Acts;return[{title:"plugins.textbox.name",properties:[{name:"plugins.textbox.properties.text.name",value:this._text,onedit:(b)=>this.CallAction(a.SetText,b)},{name:"plugins.textbox.properties.enabled.name",value:this._isEnabled,onedit:(b)=>this.CallAction(a.SetEnabled,b)},{name:"plugins.textbox.properties.read-only.name",value:this._isReadOnly,onedit:(b)=>this.CallAction(a.SetReadOnly,b)}]}]}GetScriptInterfaceClass(){return ITextInputInstance}};const c=new WeakMap;self.ITextInputInstance=class extends IDOMInstance{constructor(){super(),c.set(this,IInstance._GetInitInst().GetSdkInstance())}set text(a){c.get(this)._SetText(a)}get text(){return c.get(this)._GetText()}set placeholder(a){c.get(this)._SetPlaceholder(a)}get placeholder(){return c.get(this)._GetPlaceholder()}set tooltip(a){c.get(this)._SetTooltip(a)}get tooltip(){return c.get(this)._GetTooltip()}set isEnabled(a){c.get(this)._SetEnabled(a)}get isEnabled(){return c.get(this)._IsEnabled()}set isReadOnly(a){c.get(this)._SetReadOnly(a)}get isReadOnly(){return c.get(this)._IsReadOnly()}scrollToBottom(){c.get(this)._ScrollToBottom()}}}
+
+"use strict";C3.Plugins.TextBox.Cnds={CompareText(a,b){return 0===b?C3.equalsNoCase(this._text,a):this._text===a},OnTextChanged(){return!0},OnClicked(){return!0},OnDoubleClicked(){return!0}};
+
+"use strict";C3.Plugins.TextBox.Acts={SetText(a){this._SetText(a)},SetPlaceholder(a){this._SetPlaceholder(a)},SetTooltip(a){this._SetTooltip(a)},SetVisible(a){const b=this.GetWorldInfo();a=0!==a;b.IsVisible()===a||b.SetVisible(a)},SetEnabled(a){this._SetEnabled(0!==a)},SetReadOnly(a){this._SetReadOnly(0===a)},SetFocus(){this.FocusElement()},SetBlur(){this.BlurElement()},SetCSSStyle(a,b){this.SetElementCSSStyle(a,b)},ScrollToBottom(){this._ScrollToBottom()}};
+
+"use strict";C3.Plugins.TextBox.Exps={Text(){return this._text}};
+
 "use strict";C3.Behaviors.Pin=class extends C3.SDKBehaviorBase{constructor(a){super(a)}Release(){super.Release()}};
 
 "use strict";C3.Behaviors.Pin.Type=class extends C3.SDKBehaviorTypeBase{constructor(a){super(a)}Release(){super.Release()}OnCreate(){}};
@@ -621,6 +633,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Mouse,
 		C3.Behaviors.Anchor,
 		C3.Plugins.Text,
+		C3.Plugins.TextBox,
 		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.System.Cnds.OnLayoutStart,
 		C3.Plugins.Sprite.Acts.SetPosToObject,
@@ -638,8 +651,11 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.RestartLayout,
 		C3.Plugins.System.Cnds.CompareVar,
 		C3.Plugins.Text.Acts.SetText,
-		C3.Plugins.System.Acts.SetTimescale,
 		C3.Plugins.System.Acts.GoToLayout,
+		C3.Plugins.Mouse.Cnds.OnClick,
+		C3.Plugins.Sprite.Acts.SetVisible,
+		C3.Plugins.Text.Acts.SetVisible,
+		C3.Plugins.TextBox.Acts.SetText,
 		C3.Plugins.Keyboard.Cnds.OnKey
 	];
 };
@@ -668,6 +684,8 @@ self.C3_JsPropNameTable = [
 	{Sólido: 0},
 	{proxima_fase: 0},
 	{Texto: 0},
+	{TiledBackground: 0},
+	{Cut_Text: 0},
 	{Pontuação: 0},
 	{vidasJogador: 0}
 ];
@@ -801,7 +819,10 @@ self.C3_JsPropNameTable = [
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (v0.GetValue() + 5);
-		}
+		},
+		() => 0.75,
+		() => "Ao adentrar a caverna Arielle encontrou uma bruxa do mar chamada Úrsula. \nÚrsula contou a Arielle sua história falando o quão injustiçada tinha sido e como só queria o equilíbrio dentro dos sete mares\n\n\n\n(aperte espaço para continuar)",
+		() => "Arielle descobre ainda que a amável bruxa é a sua tia a muito tempo exilada\nArielle então resolve se tornar aprendiz de Úrsula e com ela planeja uma forma de acabar com o Principe Enzo que está destruindo os mares. Com essa decisão tomada, a saga da jovem Arielle começa.\n\n\n(Aperte espaço para continuar)"
 	];
 }
 
