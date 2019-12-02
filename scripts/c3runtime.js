@@ -650,8 +650,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.Wait,
 		C3.Plugins.System.Acts.RestartLayout,
 		C3.Plugins.System.Cnds.CompareVar,
-		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.System.Acts.GoToLayout,
+		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.Mouse.Cnds.OnClick,
 		C3.Plugins.Sprite.Acts.SetVisible,
 		C3.Plugins.Text.Acts.SetVisible,
@@ -684,8 +684,11 @@ self.C3_JsPropNameTable = [
 	{Sólido: 0},
 	{proxima_fase: 0},
 	{Texto: 0},
-	{TiledBackground: 0},
+	{Fundo_Cut: 0},
 	{Cut_Text: 0},
+	{Fundo_end: 0},
+	{TextInput: 0},
+	{Text: 0},
 	{Pontuação: 0},
 	{vidasJogador: 0}
 ];
